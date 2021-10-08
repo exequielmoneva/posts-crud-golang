@@ -15,6 +15,6 @@ func Register() *http.ServeMux {
 
 	// User routes
 	mux.HandleFunc("/post", PostsHandler)
-	//mux.HandleFunc("/post/:id", PostIdHandler)
+	mux.HandleFunc("/post/filter", PostIdHandler)
 	return mux
 }

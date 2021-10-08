@@ -46,3 +46,38 @@ func CreatePost(r *http.Request) (*mongo.InsertOneResult, error) {
 	}
 	return res, nil
 }
+func GetSinglePost(id string) views.Post {
+	var post views.Post
+	db.FindOne(context.TODO(), bson.M{"_id": id}).Decode(&post)
+	return post
+}
+
+func UpdatePost(r *http.Request, id string) *mongo.UpdateResult {
+	var post views.Post
+	err := json.NewDecoder(r.Body).Decode(&post)
+	if err != nil {
+		panic(err)
+	}
+	result, err := db.UpdateOne(
+		context.TODO(),
+		bson.M{"_id": id},
+		bson.D{{"$set",
+			bson.D{
+				{"Title", post.Title},
+				{"Content", post.Content},
+			}},
+		},
+	)
+	if err != nil {
+		panic(err)
+	}
+	return result
+}
+
+func DeletePost(id string) *mongo.DeleteResult {
+	result, err := db.DeleteOne(context.TODO(), bson.M{"_id": id})
+	if err != nil {
+		log.Fatal(err)
+	}
+	return result
+}

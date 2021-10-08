@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"posts-crud-golang/models"
+	"posts-crud-golang/views"
 )
 
 func PostsHandler(w http.ResponseWriter, r *http.Request) {
@@ -40,4 +41,50 @@ func PostsHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+}
+func PostIdHandler(w http.ResponseWriter, r *http.Request) {
+	id := r.URL.Query().Get("id")
+	switch r.Method {
+	case "GET":
+		post := models.GetSinglePost(id)
+		if post != (views.Post{}) {
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusOK)
+			json.NewEncoder(w).Encode(post)
+			return
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusNotFound)
+		json.NewEncoder(w).Encode("post not found")
+		return
+
+	case "PUT":
+		post := models.UpdatePost(r, id)
+		if post != nil {
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusNoContent)
+			return
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusUnprocessableEntity)
+		json.NewEncoder(w).Encode("invalid request body")
+		return
+
+	case "DELETE":
+		result := models.DeletePost(id)
+		if result.DeletedCount > 0 {
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusNoContent)
+			return
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusUnprocessableEntity)
+		json.NewEncoder(w).Encode("invalid id")
+		return
+
+	default:
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		json.NewEncoder(w).Encode("method not allowed")
+		return
+	}
 }
