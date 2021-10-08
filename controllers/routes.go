@@ -18,5 +18,7 @@ func Register() *http.ServeMux {
 	mux.HandleFunc("/post/filter", PostIdHandler)
 	// User routes
 	mux.HandleFunc("/user", UsersHandler)
+	mux.HandleFunc("/user/profile", UserProfileHandler) // get single user, update, delete
+	mux.HandleFunc("/user/posts", UserPostsHandler)     // posts from user
 	return mux
 }
