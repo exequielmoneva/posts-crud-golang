@@ -13,8 +13,10 @@ func Register() *http.ServeMux {
 		json.NewEncoder(w).Encode("Api is up")
 	})
 
-	// User routes
+	// Post routes
 	mux.HandleFunc("/post", PostsHandler)
 	mux.HandleFunc("/post/filter", PostIdHandler)
+	// User routes
+	mux.HandleFunc("/user", UsersHandler)
 	return mux
 }
