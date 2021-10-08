@@ -10,4 +10,5 @@ type Post struct {
 	Title     string    `json:"title"`
 	CreatedAt time.Time `bson:"created_At" json:"created_at"`
 	UpdatedAt time.Time `bson:"updated_at" json:"updated_at,omitempty"`
+	Author    string    `json:"author"`
 }

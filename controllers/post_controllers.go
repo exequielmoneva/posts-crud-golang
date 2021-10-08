@@ -25,6 +25,12 @@ func PostsHandler(w http.ResponseWriter, r *http.Request) {
 	case "POST":
 		post, err := models.CreatePost(r)
 		if err != nil {
+			if err.Error() == "empty user_id" {
+				w.Header().Set("Content-Type", "application/json")
+				w.WriteHeader(http.StatusUnprocessableEntity)
+				json.NewEncoder(w).Encode("author id must be specified")
+				return
+			}
 			w.Header().Set("Content-Type", "application/json")
 			w.WriteHeader(http.StatusUnprocessableEntity)
 			json.NewEncoder(w).Encode("invalid request body")
