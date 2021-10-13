@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+
+  web:
+
+    environment:
+      - MONGO_PRT=27017
+      - MONGO_HST=mongodb
+    build: .
+
+    ports:
+      - "3000:3000"
+
+  mongodb:
+    image: mongo:4.2
+    volumes:
+      - "./mongodb:/data/db"
