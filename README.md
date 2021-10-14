@@ -33,3 +33,41 @@ You should be able to test the API at localhost:3000
 | Read post by id | /post/filter?id=value | GET | 200 | Post belonging to that id |
 | Update post by id | /post/filter?id=value | PUT | 204 | None |
 | Delete post by id | /post/filter?id=value | DELETE | 204 | None |
+
+## Create a new user
+```
+http://localhost:3000/user
+```
+Example body of the post:
+```json
+{
+    "name":"John Doe",
+    "email":"jdoe@gmail.com",
+    "password":"Golang.21"
+}
+```
+Example response:
+```json
+{
+    "InsertedID": "e5866552-9ae3-4afb-95c2-b95b5c1b2b97"
+}
+```
+
+## Create a new post
+```
+http://localhost:3000/post
+```
+Example body of the post:
+```json
+{
+    "Content":"test post",
+    "Title":"this is a title",
+    "author": "e5866552-9ae3-4afb-95c2-b95b5c1b2b97"
+}
+```
+Example response:
+```json
+{
+    "InsertedID": "9f12030a-ea35-46d3-a893-991faaff9378"
+}
+```
