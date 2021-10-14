@@ -3,7 +3,7 @@ Blog CRUD implementation using Golang and MongoDB
 
 # Stack of the project:
 - Golang with the standard library
-- MongoDB as the DB
+- MongoDB
 - MVC pattern
   <br>
 
